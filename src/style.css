@@ -1,0 +1,623 @@
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  src: url('/fonts/ibm-plex-sans-arabic-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  src: url('/fonts/ibm-plex-sans-arabic-500.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  src: url('/fonts/ibm-plex-sans-arabic-700.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --md-sys-color-primary: #0F5B44;
+  --md-sys-color-on-primary: #FFFFFF;
+  --md-sys-color-primary-container: #A3F2D0;
+  --md-sys-color-on-primary-container: #002116;
+  --md-sys-color-secondary: #4C6357;
+  --md-sys-color-surface: #F8FAF7;
+  --md-sys-color-surface-container: #FFFFFF;
+  --md-sys-color-surface-container-high: #EEF2EE;
+  --md-sys-color-on-surface: #191C1A;
+  --md-sys-color-on-surface-variant: #404943;
+  --md-sys-color-outline: #707973;
+  --md-sys-color-outline-variant: #BFC9C2;
+  --md-sys-color-error: #BA1A1A;
+  --md-sys-color-warning: #B26A00;
+  --md-sys-color-success: #1E8E3E;
+  --font-arabic: 'IBM Plex Sans Arabic', 'Amiri', 'Traditional Arabic', serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+  --shadow-1: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-2: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* App Header */
+.app-header {
+  background: var(--md-sys-color-surface-container);
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  padding: 12px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--md-sys-color-on-surface);
+}
+
+.brand-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  background: var(--md-sys-color-primary);
+  color: white;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  font-family: var(--font-arabic);
+}
+
+.brand-text h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.brand-text span.ar {
+  font-family: var(--font-arabic);
+  color: var(--md-sys-color-primary);
+  font-size: 1.15rem;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Common Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  outline: none;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  box-shadow: var(--shadow-1);
+}
+.btn-primary:hover {
+  background-color: #0c4a37;
+  box-shadow: var(--shadow-2);
+}
+
+.btn-secondary {
+  background-color: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface);
+  border: 1px solid var(--md-sys-color-outline-variant);
+}
+.btn-secondary:hover {
+  background-color: #e2e8e3;
+}
+
+.btn-tonal {
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+}
+.btn-tonal:hover {
+  filter: brightness(0.95);
+}
+
+.btn-icon {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+}
+.btn-icon:hover {
+  background: var(--md-sys-color-surface-container-high);
+}
+
+/* App Container */
+.app-container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  flex: 1;
+  width: 100%;
+}
+
+/* Mode Switcher Segmented Button */
+.segmented-control {
+  display: flex;
+  background: var(--md-sys-color-surface-container-high);
+  border-radius: var(--radius-full);
+  padding: 4px;
+  margin-bottom: 24px;
+  border: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.segmented-control button {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 10px 16px;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--md-sys-color-on-surface-variant);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.segmented-control button.active {
+  background: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-primary);
+  box-shadow: var(--shadow-1);
+}
+
+/* Main Display Card */
+.display-card {
+  background: var(--md-sys-color-surface-container);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.card-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--md-sys-color-surface-container-high);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.status-badge.live {
+  background: #E6F4EA;
+  color: #137333;
+}
+
+.status-badge.live::before {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1E8E3E;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.8; }
+}
+
+/* Recitation Stage */
+.recitation-stage {
+  padding: 32px 24px;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+/* Arabic Verse Display */
+.verse-box {
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.verse-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--md-sys-color-secondary);
+}
+
+.verse-meta .surah-en {
+  color: var(--md-sys-color-outline);
+}
+
+.arabic-text {
+  font-family: var(--font-arabic);
+  direction: rtl;
+  font-size: 2.1rem;
+  line-height: 2.4;
+  color: var(--md-sys-color-on-surface);
+  word-spacing: 6px;
+  margin-bottom: 24px;
+}
+
+.quran-word {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 6px;
+  transition: all 0.25s ease;
+}
+
+.quran-word.spoken {
+  color: #137333;
+  background-color: #E6F4EA;
+}
+
+.quran-word.current {
+  color: #0F5B44;
+  background-color: #A3F2D0;
+  font-weight: 700;
+  box-shadow: 0 0 0 2px var(--md-sys-color-primary);
+  transform: translateY(-2px);
+}
+
+.quran-word.slip {
+  color: #B26A00;
+  background-color: #FEF7E0;
+  border-bottom: 2px dashed #F29900;
+}
+
+.quran-word.skipped {
+  color: #C5221F;
+  background-color: #FCE8E6;
+  text-decoration: line-through;
+}
+
+.ayah-end-symbol {
+  font-size: 1.6rem;
+  color: var(--md-sys-color-primary);
+  margin: 0 8px;
+  display: inline-block;
+}
+
+/* Waveform Visualizer */
+.waveform-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 48px;
+  margin: 16px 0;
+}
+
+.waveform-bar {
+  width: 4px;
+  height: 12px;
+  background-color: var(--md-sys-color-primary);
+  border-radius: 4px;
+  transition: height 0.1s ease;
+}
+
+/* Transcript preview */
+.transcript-badge {
+  direction: rtl;
+  font-family: var(--font-arabic);
+  font-size: 1.15rem;
+  color: var(--md-sys-color-outline);
+  background: var(--md-sys-color-surface-container-high);
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  margin-top: 12px;
+  display: inline-flex;
+  max-width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Action Bar */
+.action-bar {
+  padding: 16px 24px;
+  border-top: 1px solid var(--md-sys-color-surface-container-high);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: var(--md-sys-color-surface-container);
+}
+
+/* Sample selector shelf */
+.samples-shelf {
+  background: var(--md-sys-color-surface-container);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+
+.shelf-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--md-sys-color-on-surface);
+}
+
+.sample-chips {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.chip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--md-sys-color-surface-container-high);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--md-sys-color-on-surface);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chip-btn:hover {
+  background: var(--md-sys-color-primary-container);
+  border-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary-container);
+}
+
+/* Correction View specific styling */
+.correction-panel {
+  width: 100%;
+  text-align: right;
+  direction: rtl;
+}
+
+.verdict-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+  direction: rtl;
+}
+
+.verdict-card {
+  background: var(--md-sys-color-surface-container-high);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.verdict-card.correct {
+  border-color: #34A853;
+  background-color: #E6F4EA;
+}
+
+.verdict-card.slip {
+  border-color: #FBBC04;
+  background-color: #FEF7E0;
+}
+
+.verdict-card.skipped {
+  border-color: #EA4335;
+  background-color: #FCE8E6;
+}
+
+.verdict-word {
+  font-family: var(--font-arabic);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.verdict-status-label {
+  font-size: 0.75rem;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Modal Dialog */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal-dialog {
+  background: var(--md-sys-color-surface-container);
+  border-radius: var(--radius-lg);
+  max-width: 620px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 16px 32px rgba(0,0,0,0.2);
+}
+
+.modal-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-body {
+  padding: 20px 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--md-sys-color-outline);
+  background: var(--md-sys-color-surface);
+  font-size: 1rem;
+  margin-bottom: 16px;
+  outline: none;
+}
+.search-input:focus {
+  border-color: var(--md-sys-color-primary);
+  box-shadow: 0 0 0 2px var(--md-sys-color-primary-container);
+}
+
+.surah-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px;
+}
+
+.surah-item {
+  padding: 12px 16px;
+  background: var(--md-sys-color-surface);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.surah-item:hover {
+  background: var(--md-sys-color-primary-container);
+  border-color: var(--md-sys-color-primary);
+}
+
+.surah-item-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--md-sys-color-surface-container-high);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.surah-item-ar {
+  font-family: var(--font-arabic);
+  font-size: 1.25rem;
+  color: var(--md-sys-color-primary);
+}
+
+/* Footer note */
+.app-footer {
+  padding: 16px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--md-sys-color-outline);
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+  background: var(--md-sys-color-surface-container);
+}
+
+@media (max-width: 600px) {
+  .app-header { padding: 10px 16px; }
+  .arabic-text { font-size: 1.7rem; line-height: 2.1; }
+  .action-bar { flex-direction: column; width: 100%; }
+  .action-bar .btn { width: 100%; }
+}

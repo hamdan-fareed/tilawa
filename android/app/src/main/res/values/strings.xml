@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Tilawa</string>
+    <string name="title_tracking">Recitation Tracking</string>
+    <string name="title_correction">Recitation Correction</string>
+    <string name="title_explorer">Quran Explorer</string>
+    <string name="start_reciting">Start Reciting</string>
+    <string name="stop_reciting">Stop</string>
+    <string name="reset_session">Reset</string>
+    <string name="offline_ready">100% Offline Ready</string>
+    <string name="listening_status">Listening to Recitation…</string>
+    <string name="accuracy">Accuracy</string>
+    <string name="slips">Slips Detected</string>
+</resources>

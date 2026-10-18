@@ -1,0 +1,10 @@
+{
+  "name": "Tilawa",
+  "description": "On-device Quran recitation recognition and verse tracking",
+  "requestFramePermissions": [
+    "android.permission.RECORD_AUDIO"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

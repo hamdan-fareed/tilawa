@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tilawa — Recite the Quran. See the verse.</title>
+    <meta name="description" content="Offline Quran verse recognition, live word tracking, and recitation correction." />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230F5B44'><path d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'/></svg>" />
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="#" class="brand" data-testid="brand_logo">
+        <div class="brand-logo">ت</div>
+        <div class="brand-text">
+          <h1>Tilawa <span class="ar">تلاوة</span></h1>
+        </div>
+      </a>
+      <div class="header-actions">
+        <button id="btn-explore" class="btn btn-secondary" data-testid="browse_surahs_button" title="Browse Surahs">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15z"/></svg>
+          <span>Browse Quran</span>
+        </button>
+        <button id="btn-report" class="btn btn-secondary" data-testid="report_mismatch_button" title="Report Miss">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span>Report Miss</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="app-container">
+      <!-- Segmented Mode Control -->
+      <div class="segmented-control" role="tablist">
+        <button id="mode-tracking" class="active" role="tab" aria-selected="true" data-testid="mode_tracking_tab">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M2 6h20M2 18h20"/></svg>
+          <span>Verse Tracking</span>
+        </button>
+        <button id="mode-correction" role="tab" aria-selected="false" data-testid="mode_correction_tab">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Recitation Correction</span>
+        </button>
+      </div>
+
+      <!-- Main Display Card -->
+      <div class="display-card">
+        <div class="card-header">
+          <span id="status-badge" class="status-badge" data-testid="engine_status_badge">Offline Ready</span>
+          <div id="transcript-preview" class="transcript-badge" style="display: none;"></div>
+        </div>
+
+        <div class="recitation-stage">
+          <!-- Verse Box -->
+          <div class="verse-box">
+            <div id="verse-meta" class="verse-meta">
+              <span>سُورَةُ ٱلْفَاتِحَةِ</span>
+              <span class="surah-en">Al-Faatiha (1:1)</span>
+            </div>
+
+            <div id="verse-text" class="arabic-text" data-testid="quran_verse_text">
+              <!-- Words injected dynamically -->
+            </div>
+
+            <!-- Waveform Animation -->
+            <div class="waveform-container" aria-label="Audio level visualizer">
+              <span class="waveform-bar"></span>
+              <span class="waveform-bar"></span>
+              <span class="waveform-bar"></span>
+              <span class="waveform-bar"></span>
+              <span class="waveform-bar"></span>
+              <span class="waveform-bar"></span>
+              <span class="waveform-bar"></span>
+              <span class="waveform-bar"></span>
+              <span class="waveform-bar"></span>
+              <span class="waveform-bar"></span>
+              <span class="waveform-bar"></span>
+              <span class="waveform-bar"></span>
+            </div>
+          </div>
+
+          <!-- Correction View Panel -->
+          <div id="correction-container" class="correction-panel" style="display: none;">
+            <div id="correction-stats"></div>
+            <div id="verdict-list" class="verdict-list"></div>
+          </div>
+
+          <!-- Tracking Mode Info -->
+          <div id="tracking-container">
+            <div style="margin-top: 10px; font-size: 0.9rem; color: var(--md-sys-color-outline);">
+              Candidate verses:
+              <div id="candidates-list" style="margin-top: 8px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Controls -->
+        <div class="action-bar">
+          <button id="btn-mic" class="btn btn-primary" data-testid="start_mic_button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            <span>Start Reciting</span>
+          </button>
+
+          <button id="btn-stop" class="btn btn-secondary" style="display: none;" data-testid="stop_mic_button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+            <span>Stop</span>
+          </button>
+
+          <button id="btn-reset" class="btn btn-secondary" data-testid="reset_button">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            <span>Reset</span>
+          </button>
+
+          <label class="btn btn-tonal" style="cursor: pointer;" title="Upload recitation audio">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span>Upload Audio</span>
+            <input type="file" id="audio-file-input" accept="audio/*" style="display: none;" />
+          </label>
+        </div>
+      </div>
+
+      <!-- Quick Sample Recitations Shelf -->
+      <section class="samples-shelf">
+        <h3 class="shelf-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>Test Recitation Clips (Corpus Samples)</span>
+        </h3>
+        <p style="font-size: 0.85rem; color: var(--md-sys-color-outline); margin-bottom: 12px;">
+          Try instant verse tracking with real bundled recitations:
+        </p>
+        <div class="sample-chips">
+          <button class="chip-btn chip-sample" data-file="/samples/001001.mp3" data-surah="1" data-ayah="1" data-testid="sample_fatihah_1">
+            ▶ Al-Fatihah 1:1 (بِسْمِ ٱللَّهِ)
+          </button>
+          <button class="chip-btn chip-sample" data-file="/samples/001002.mp3" data-surah="1" data-ayah="2" data-testid="sample_fatihah_2">
+            ▶ Al-Fatihah 1:2 (ٱلْحَمْدُ لِلَّهِ)
+          </button>
+          <button class="chip-btn chip-sample" data-file="/samples/002255.mp3" data-surah="2" data-ayah="255" data-testid="sample_ayat_kursi">
+            ▶ Ayat Al-Kursi 2:255 (ٱللَّهُ لَآ إِلَٰهَ)
+          </button>
+          <button class="chip-btn chip-sample" data-file="/samples/036001.mp3" data-surah="36" data-ayah="1" data-testid="sample_yasin">
+            ▶ Ya-Sin 36:1 (يسٓ)
+          </button>
+          <button class="chip-btn chip-sample" data-file="/samples/ikhlas_2_3.m4a" data-surah="112" data-ayah="2" data-testid="sample_ikhlas">
+            ▶ Al-Ikhlas 112:2-3
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Explorer Modal -->
+    <div id="explorer-modal" class="modal-backdrop" style="display: none;">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h2>Browse the Quran (114 Surahs)</h2>
+          <button id="close-explorer" class="btn btn-icon">✕</button>
+        </div>
+        <div class="modal-body">
+          <input type="text" id="search-input" class="search-input" placeholder="Search by Surah name, number, or verse..." />
+          <div id="surah-list" class="surah-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Report Modal -->
+    <div id="report-modal" class="modal-backdrop" style="display: none;">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h2>Report a Recitation Miss</h2>
+          <button id="close-report" class="btn btn-icon">✕</button>
+        </div>
+        <div class="modal-body">
+          <p style="font-size: 0.9rem; color: var(--md-sys-color-outline); margin-bottom: 16px;">
+            Help improve the offline recitation engine by noting what you recited versus what was predicted.
+          </p>
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-weight: 600; margin-bottom: 4px;">Intended Surah:</label>
+            <select id="report-surah" style="width: 100%; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--md-sys-color-outline);"></select>
+          </div>
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-weight: 600; margin-bottom: 4px;">Intended Ayah:</label>
+            <input type="number" id="report-ayah" min="1" value="1" style="width: 100%; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--md-sys-color-outline);" />
+          </div>
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-weight: 600; margin-bottom: 4px;">Notes (e.g. skipped word, jumped verse):</label>
+            <textarea id="report-notes" rows="3" style="width: 100%; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--md-sys-color-outline);"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="submit-report" class="btn btn-primary">Save Report</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="app-footer">
+      Tilawa — 100% on-device Quran verse recognition. No audio uploads, fully offline.
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
